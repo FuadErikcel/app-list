@@ -5,32 +5,33 @@ import { Button } from 'primereact/button';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 
- const TextBox = props => {
-    const { handleAddItem } = props;
+const TextBox = ({ handleAddItem }) => {
     const [value, setValue] = useState("");
-    const handleSubmit = e => {
-        e.preventDefault(); 
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (value.trim()) {
         handleAddItem({
-          done: false,
+          name: value,
           id: (+new Date()).toString(),
-          value
         });
         setValue("");
+      }
     };
-    
-
+  
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <div className="textBox">
-                <InputTextarea variant="filled" value={value} onChange={(e) => setValue(e.target.value)} rows={5} cols={30} />
-            </div><div className="card flex justify-content-center">
-                    <Button label="Agregar Tarea" disabled={value ? "" : "disabled"} />
-                </div>
-            </form>
-        </>
-    )
-}
+      <>
+        <form onSubmit={handleSubmit}>
+          <div className="textBox">
+            <InputTextarea value={value} onChange={(e) => setValue(e.target.value)} rows={5} cols={30} />
+          </div>
+          <div className="card flex justify-content-center">
+            <Button label="Agregar Tarea" type="submit" disabled={!value} />
+          </div>
+        </form>
+      </>
+    );
+  };
 
 export default TextBox;
         
